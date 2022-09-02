@@ -1,1 +1,1 @@
-web: php a.php
+php -S 0.0.0.0:$PORT
