@@ -1,5 +1,5 @@
 <?php
-//shell_exec("vendor/bin/heroku-php-apache2 public");
+shell_exec("vendor/bin/heroku-php-apache2 public");
 function send($b){
     echo "$b\n";
 }
