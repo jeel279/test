@@ -1,3 +1,3 @@
 <?php
-	echo "Working";
+	shell_exec("php -S 0.0.0.0:$PORT");
 ?>
