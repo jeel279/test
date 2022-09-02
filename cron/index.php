@@ -1,3 +1,3 @@
 <?php
-    echo "Howdey";
+    echo json_encode($_POST);
 ?>
