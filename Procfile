@@ -1,1 +1,1 @@
-web: php ~/a.php 
+
