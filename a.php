@@ -1,5 +1,5 @@
 <?php
-shell_exec("php -S 0.0.0.0:443");
+shell_exec("vendor/bin/heroku-php-apache2 public");
 function send($b){
     echo "$b\n";
 }
