@@ -20,7 +20,7 @@ async function postData(url = '', data = {}) {
 
 
 document.getElementById("submit").addEventListener("click",function(e){
-    postData('//validate', `email=${email.value}&name=${fname.value}` )
+    postData('https://'+location.host+'/validate/', `email=${email.value}&name=${fname.value}` )
   .then((data) => {
     // if(data["code"]==200){
         
