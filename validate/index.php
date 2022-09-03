@@ -2,6 +2,7 @@
 	/*if(isset($_POST["email"]) && isset($_POST["name"])){
 		
 	}*/
+    header("Access-Control-Allow-Methods: GET, POST");
     session_start();
     if(isset($_SESSION["visited"])){
         echo json_encode("{'code':420,'detail':'Better Luck Next Time'}");
