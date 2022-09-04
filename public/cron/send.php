@@ -24,6 +24,8 @@ function random(){
     return $val;
 }
 
+include '../../keyset.conf';
+
 function sendmail($email,$as,$no){
     $val = random();
     $data = array();
@@ -31,7 +33,10 @@ function sendmail($email,$as,$no){
     $data["personalizations"][0] = array("to"=>array(array("email"=>"".$email."")));
     $data["from"] = array("email"=>"noreply@attendworks.tech","name"=>"Random XKCD");
     $data["subject"] = $val["safe_title"] ." - XKCD";
-    $data["content"][0] = array("type"=>"text/html","value"=>"Hey ".$as.", here is new comic for you <br><br> <img src='".$val["url"]. "'>");
+    $message = $email;
+    $encrypted_text = sodium_crypto_aead_xchacha20poly1305_ietf_encrypt($message, '', $nonce, $key);
+    
+    $data["content"][0] = array("type"=>"text/html","value"=>"Hey ".$as.", here is new comic for you <br><br> <a href='https://randomxkcdcoms.herokuapp.com/unsubscribe?token=".base64_encode($encrypted_text)."'></a> <br><br> <img src='".$val["url"]. "'>");
     $data["attachments"][0] = array("content"=>"".$val["img"]."","type"=>"image/jpeg","filename" => "".$no.".jpeg");
 // array_push($data,$body);
 // var_dump($data);
