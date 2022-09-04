@@ -2,7 +2,7 @@
 session_start();
     if(isset($_SESSION["OTP"])){
         if(isset($_POST["OTP"])){
-            if($_SESSION["OTP"]==$_POST["OTP"]){
+            if((int)$_SESSION["OTP"]==(int)$_POST["OTP"]){
                 include '../validate/dbconn.php';
                 $t=time();
                 $tm = $t;
@@ -10,7 +10,6 @@ session_start();
                 $name = $_SESSION["NAME"];
                 $email = $_SESSION["EMAIL"];
                 $sql = "INSERT INTO mailing_list (name,email,batch,created) VALUES ('$name','$email',$t,$tm)";
-      
                 $result = mysqli_query($db, $sql) 
                 or die(mysqli_error($db));
                 if($result){

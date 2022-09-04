@@ -1,0 +1,6 @@
+#detBlock{
+  display: block;
+}
+#otpBlock,#errBlock{
+  display: none;
+}

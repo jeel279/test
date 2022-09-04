@@ -1,5 +1,10 @@
 var email = document.getElementById("email");
 var fname = document.getElementById("name");
+var detblock = document.getElementById("detBlock");
+var otpblock = document.getElementById("otpBlock");
+var error = document.getElementById("errBlock");
+var otp = document.getElementById("otp");
+var k;
 async function postData(url = '', data = {}) {
     // Default options are marked with *
     const response = await fetch(url, {
@@ -20,12 +25,31 @@ async function postData(url = '', data = {}) {
 
 
 document.getElementById("submit").addEventListener("click",function(e){
-    postData('https://'+location.host+'/validate/', `email=${email.value}&name=${fname.value}` )
+    postData('https://'+location.host+'/validate/', `email=${email.value}&name=${fname.value}&submit=true` )
   .then((data) => {
-    // if(data["code"]==200){
-        
-    // }
-    console.log(data); // JSON data parsed by `data.json()` call
+    console.log(data);
+    if(data['code']==200){
+       error.style.display = 'none';
+       detblock.style.display = 'none';
+       otpblock.style.display = 'block';
+    }else if(data['code']==2){
+      error.style.display = 'block';
+      var i = parseInt(data['msg']);
+      var x = setInterval(()=>{error.innerText = `You can request new otp after ${i--} seconds`;if(i==0)clearInterval(x)},1000);
+    }else{
+        error.style.display = 'block';
+        error.innerText = data['msg'].toString();
+    }
   });
+})
+
+document.getElementById("verify").addEventListener("click",function(e){
+  postData('https://'+location.host+'/validate/', `otp=${otp.value}&verify=true` )
+.then((data) => {
+  console.log(data);
+  if(data['code']==1){
+    document.body.innerHTML = data["msg"];
+  }
+});
 })
 
