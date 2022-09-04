@@ -5,5 +5,5 @@ RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
 AuthName "Dialog prompt"
 AuthType Basic
-AuthUserFile /app/cron/.htpasswd
+AuthUserFile /app/public/cron/.htpasswd
 Require valid-user
