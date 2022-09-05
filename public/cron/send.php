@@ -26,45 +26,86 @@ function random(){
 
 include '../../keyset.conf';
 
-function sendmail($email,$as,$no){
+function sendmail($email,$as,$no,$en){
     $val = random();
-    $data = array();
+/*    $data = array();
     $body = array();
     $data["personalizations"][0] = array("to"=>array(array("email"=>"".$email."")));
     $data["from"] = array("email"=>"noreply@attendworks.tech","name"=>"Random XKCD");
     $data["subject"] = $val["safe_title"] ." - XKCD";
     $message = $email;
-    $encrypted_text = sodium_crypto_aead_xchacha20poly1305_ietf_encrypt($message, '', $nonce, $key);
+
     
-    $data["content"][0] = array("type"=>"text/html","value"=>"Hey ".$as.", here is new comic for you <br><br> <a href='https://randomxkcdcoms.herokuapp.com/unsubscribe?token=".base64_encode($encrypted_text)."'></a> <br><br> <img src='".$val["url"]. "'>");
+    
+    $data["content"][0] = array("type"=>"text/html","value"=>"Hey ".$as.", here is new comic for you <br><br> <a href='https://randomxkcdcoms.herokuapp.com/unsubscribe?token=".$en."'></a> <br><br> <img src='".$val["url"]. "'>");
     $data["attachments"][0] = array("content"=>"".$val["img"]."","type"=>"image/jpeg","filename" => "".$no.".jpeg");
-// array_push($data,$body);
+*/
+    // array_push($data,$body);
 // var_dump($data);
 
     //echo json_encode($data);
 
+    function read_cb($ch, $fp, $length) {
+    return fread($fp, $length);
+}
+
+$fp = fopen('php://memory', 'r+');
+$file_name = "a.txt";
+$chunked_content = chunk_split($val["img"]);
+$string = "From: \"Comics\" <no-reply@attendworks.tech>\r\n";
+$string .= "To: \"".$as."\"<".$email.">\r\n";
+$string .= "Date: " . date('r') . "\r\n";
+$string .= "Subject: Test\r\n";
+$string .= "MIME-Version: 1.0\r\n";
+$string .= "Content-Type: multipart/mixed; boundary=\"MIXED\"\r\n";
+$string .= "\r\n";
+$string .= "--MIXED\r\n";
+$string .= "Content-Type: text/html; charset=utf-8\r\n";
+$string .= "Content-Transfer-Encoding: 7bit\r\n";
+$string .= "\r\n";
+$string .= "Hey ".$as.", here is new comic for you <br><br> <a href='https://randomxkcdcoms.herokuapp.com/unsubscribe?token=".$en."'></a> <br><br> <img src='".$val["url"]. "'>\r\n";
+$string .= "\r\n";
+$string .= "--MIXED\r\n";
+$string .= "Content-Type: application/octet-stream; name=\"".((int)$no+1).".jpeg\"\r\n";
+$string .= "Content-Transfer-Encoding: base64\r\n";
+$string .= "Content-Disposition: attachment; filename=\"".((int)$no+1).".jpeg\"\r\n";
+$string .= "\r\n";
+$string .= $chunked_content . "\r\n";
+$string .= "\r\n";
+
+
+fwrite($fp, $string);
+rewind($fp);
+
+
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    //curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"personalizations\": [{\"to\": [{\"email\": \"jeel4402@gmail.com\"}]}],\"from\": {\"email\": \"noreply@attendworks.tech\"},\"subject\": \"Sending with SendGrid is Fun\",\"content\": [{\"type\": \"text/plain\", \"value\": \"and easy to do anywhere, even with cURL\"}],\"attachments\": [{\"content\": \"" . $val["img"] . "\", \"type\": \"image/jpeg\", \"filename\": \"attachment.jpeg\"}]}");
-    //echo json_encode($data);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    $headers = array();
-    $headers[] = 'Authorization: Bearer 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';
-    $headers[] = 'Content-Type: application/json';
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    $result = curl_exec($ch);
-    if (curl_errno($ch)) {
-        echo 'Error:' . curl_error($ch);
-        exit();
+curl_setopt_array($ch, [
+    CURLOPT_URL => 'smtp://us2.smtp.mailhostbox.com:587',
+    CURLOPT_MAIL_FROM => '<no-reply@attendworks.tech>',
+    CURLOPT_MAIL_RCPT => ['<'.$email.'>'],
+    CURLOPT_USERNAME => 'no-reply@attendworks.tech',
+    CURLOPT_PASSWORD => ')ndq#DU4',
+    CURLOPT_USE_SSL => CURLUSESSL_TRY,
+    CURLOPT_READFUNCTION => 'read_cb',
+    CURLOPT_INFILE => $fp,
+    CURLOPT_UPLOAD => true,
+    CURLOPT_VERBOSE => true,
+]);
+
+    $x = curl_exec($ch);
+
+    if ($x === false) {
+        echo curl_errno($ch) . ' = ' . curl_strerror(curl_errno($ch)) . PHP_EOL;
     }
+
+    curl_close($ch);
+    fclose($fp);
     $db = new db();
     $result = $db->query("UPDATE mailing_list SET mail_sent=".((int)$no + 1)." WHERE email='".$email."'");
     if($result)
-        echo "Sent";
+        return true;
     else
-        echo "mail sent but count error";
+        return false;
         
 }
 ?>

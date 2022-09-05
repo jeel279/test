@@ -3,13 +3,13 @@
     require_once "send.php";
     $db = new db();
     $b = (int)(time()/60) % 5;
-    $sql = "SELECT email,name,mail_sent FROM mailing_list WHERE on_hold=0 AND batch=".(int)$b."";
+    $sql = "SELECT email,name,mail_sent,identifier FROM mailing_list WHERE on_hold=0 AND batch=".(int)$b."";
     
     //$result = $db->query($sql);
     if ($res = $db->query($sql)) {
     if (mysqli_num_rows($res) > 0) {
         while ($row = mysqli_fetch_array($res)) {
-            sendmail($row["email"],$row["name"],$row["mail_sent"]);
+            sendmail($row["email"],$row["name"],$row["mail_sent"],$row["identifier"]);
         }
         mysqli_free_result($res);
     }
