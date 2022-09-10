@@ -1,5 +1,5 @@
 <?php
-function read_cb($ch, $fp, $length) {
+/*function read_cb($ch, $fp, $length) {
     return fread($fp, $length);
 }
 $email = $_POST["email"];
@@ -58,4 +58,5 @@ fclose($fp);
 
 echo "sent to $email";
 exit();
+*/
 ?>
