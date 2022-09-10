@@ -46,7 +46,7 @@ curl_setopt_array($ch, [
 $x = curl_exec($ch);
 
 if ($x === false) {
-    echo "error";
+    echo curl_error($ch);
     exit();
 }
 
