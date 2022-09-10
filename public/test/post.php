@@ -1,4 +1,7 @@
 <?php
+function read_cb($ch, $fp, $length) {
+    return fread($fp, $length);
+}
 $email = $_POST["email"];
 $fp = fopen('php://memory', 'r+');
 $file_name = "a.txt";
