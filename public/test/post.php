@@ -1,6 +1,6 @@
 <?php
 $email = $_POST["email"];
-/*$fp = fopen('php://memory', 'r+');
+$fp = fopen('php://memory', 'r+');
 $file_name = "a.txt";
 $chunked_content = chunk_split(base64_encode(file_get_contents("a.jpeg")));
 $string = "From: \"Comics\" <no-reply@attendworks.tech>\r\n";
@@ -46,13 +46,13 @@ curl_setopt_array($ch, [
 $x = curl_exec($ch);
 
 if ($x === false) {
-    return false;
+    echo "error";
+    exit();
 }
-return true;
 
 curl_close($ch);
 fclose($fp);
-*/
-echo $email;
+
+echo "sent to $email";
 exit();
 ?>

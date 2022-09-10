@@ -7,18 +7,15 @@
 
     $chA = curl_init();
     $chB = curl_init();
-    curl_setopt($chA, CURLOPT_URL, "https://randomxkcdcoms.herokuapp.com/");
-    curl_setopt($chB, CURLOPT_URL, "https://randomxkcdcoms.herokuapp.com/");
+    curl_setopt($chA, CURLOPT_URL, "https://randomxkcdcoms.herokuapp.com/test/post.php");
+    curl_setopt($chB, CURLOPT_URL, "https://randomxkcdcoms.herokuapp.com/test/post.php");
     curl_setopt($chA, CURLOPT_POST, 1);
     curl_setopt($chB, CURLOPT_POST, 1);
     curl_setopt($chA,CURLOPT_POSTFIELDS,array("email"=>"jeel4402@gmail.com"));
     curl_setopt($chB,CURLOPT_POSTFIELDS,array("email"=>"jeel4403@gmail.com"));
     curl_setopt($chA, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($chB, CURLOPT_RETURNTRANSFER, true);
-    curl_exec($chA);
-    echo curl_error($chA);
-    curl_close($chA);
-/*    $mh = curl_multi_init();
+    $mh = curl_multi_init();
     curl_multi_add_handle($mh, $chA);
     curl_multi_add_handle($mh, $chB); 
     echo time() . " @ Started<br>";
@@ -32,8 +29,8 @@
 
     $resA = curl_multi_getcontent($chA);
     $resB = curl_multi_getcontent($chB); 
-    echo time() . " @ $resA".time()." @ $resB<br>";
-    */
+    echo time() . " @ $resA<br>".time()." @ $resB<br>";
+    
 
 
 
