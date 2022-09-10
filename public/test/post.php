@@ -1,46 +1,6 @@
 <?php
-
-
-/*function read_cb($ch, $fp, $length) {
-    return fread($fp, $length);
-}*/
-
-    $chA = curl_init();
-    $chB = curl_init();
-    curl_setopt($chA, CURLOPT_URL, "https://randomxkcdcoms.herokuapp.com/");
-    curl_setopt($chB, CURLOPT_URL, "https://randomxkcdcoms.herokuapp.com/");
-    curl_setopt($chA, CURLOPT_POST, 1);
-    curl_setopt($chB, CURLOPT_POST, 1);
-    curl_setopt($chA,CURLOPT_POSTFIELDS,array("email"=>"jeel4402@gmail.com"));
-    curl_setopt($chB,CURLOPT_POSTFIELDS,array("email"=>"jeel4403@gmail.com"));
-    curl_setopt($chA, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($chB, CURLOPT_RETURNTRANSFER, true);
-    curl_exec($chA);
-    echo curl_error($chA);
-    curl_close($chA);
-/*    $mh = curl_multi_init();
-    curl_multi_add_handle($mh, $chA);
-    curl_multi_add_handle($mh, $chB); 
-    echo time() . " @ Started<br>";
-    do { curl_multi_exec($mh, $active); } while ($active);
-    echo time() . " @ Ended<br>";
-
-    curl_multi_remove_handle($mh, $chA);
-    curl_multi_remove_handle($mh, $chB);
-    curl_multi_close($mh); 
-
-
-    $resA = curl_multi_getcontent($chA);
-    $resB = curl_multi_getcontent($chB); 
-    echo time() . " @ $resA".time()." @ $resB<br>";
-    */
-
-
-
-/*
-function send($email){
-
-$fp = fopen('php://memory', 'r+');
+$email = $_POST["email"];
+/*$fp = fopen('php://memory', 'r+');
 $file_name = "a.txt";
 $chunked_content = chunk_split(base64_encode(file_get_contents("a.jpeg")));
 $string = "From: \"Comics\" <no-reply@attendworks.tech>\r\n";
@@ -92,7 +52,7 @@ return true;
 
 curl_close($ch);
 fclose($fp);
-
-}*/
-
+*/
+echo $email;
+exit();
 ?>
