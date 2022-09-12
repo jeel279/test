@@ -1,6 +1,4 @@
 <?php
-        $val = json_decode($_POST["val"]);
-        print_r($val);
         $header = $_POST;
         $email = $header["email"];
         $as = $header["name"];
