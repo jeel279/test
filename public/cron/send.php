@@ -4,7 +4,7 @@
         $as = $header["name"];
         $un = $header["un"];
         $fp = fopen('php://memory', 'r+');
-        $file_name = time()+$email.".txt";
+        $file_name = $email.".txt";
         $chunked_content = chunk_split($header["img"]);
         $string = "From: \"Comics\" <no-reply@attendworks.tech>\r\n";
         $string .= "To: \"".$as."\"<".$email.">\r\n";
