@@ -35,7 +35,7 @@ class sendMail{
         curl_setopt($ch, CURLOPT_URL, "https://randomxkcdcoms.herokuapp.com/cron/send.php");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
-        curl_setopt($ch,CURLOPT_POSTFIELDS,array("email"=>"".$pref["email"]."","val"=>$this->vale,"name"=>"".$pref["name"]."","un"=>"".$pref["un"].""));
+        curl_setopt($ch,CURLOPT_POSTFIELDS,array("email"=>"".$pref["email"]."","safe_title"=>$this->vale["safe_title"],"img"=>"".$this->vale["img"]."","url"=>"".$this->vale["url"]."","name"=>"".$pref["name"]."","un"=>"".$pref["un"].""));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         return $ch;
     }
