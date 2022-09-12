@@ -29,25 +29,25 @@
 
         fwrite($fp, $string);
         rewind($fp);
-        $this->ch = curl_init();
-        curl_setopt($this->ch,CURLOPT_URL,'smtp://us2.smtp.mailhostbox.com:587');
-        curl_setopt($this->ch,CURLOPT_USERNAME,'no-reply@attendworks.tech');
-        curl_setopt($this->ch,CURLOPT_PASSWORD,')ndq#DU4');
-        curl_setopt($this->ch,CURLOPT_USE_SSL,CURLUSESSL_TRY);
-        curl_setopt($this->ch,CURLOPT_READFUNCTION,'read_cb');
-        curl_setopt($this->ch,CURLOPT_UPLOAD,true);
-        curl_setopt_array($this->ch, [
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL,'smtp://us2.smtp.mailhostbox.com:587');
+        curl_setopt($ch,CURLOPT_USERNAME,'no-reply@attendworks.tech');
+        curl_setopt($ch,CURLOPT_PASSWORD,')ndq#DU4');
+        curl_setopt($ch,CURLOPT_USE_SSL,CURLUSESSL_TRY);
+        curl_setopt($ch,CURLOPT_READFUNCTION,'read_cb');
+        curl_setopt($ch,CURLOPT_UPLOAD,true);
+        curl_setopt_array($ch, [
             CURLOPT_MAIL_RCPT => ['<'.$email.'>'],
             CURLOPT_INFILE => $fp
         ]);
 
 
-        $x = curl_exec($this->ch);
+        $x = curl_exec($ch);
         
         if ($x === false) {
             return false;
         }
         return true;
-        curl_close($this->ch);
+        curl_close($ch);
         fclose($fp);
 ?>
