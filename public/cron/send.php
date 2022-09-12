@@ -39,6 +39,7 @@ function read_cb($ch, $fp, $length) {
         curl_setopt($ch,CURLOPT_USE_SSL,CURLUSESSL_TRY);
         curl_setopt($ch,CURLOPT_READFUNCTION,'read_cb');
         curl_setopt($ch,CURLOPT_UPLOAD,true);
+        curl_setopt($ch,CURLOPT_VERBOSE,true);
         curl_setopt_array($ch, [
             CURLOPT_MAIL_RCPT => ['<'.$email.'>'],
             CURLOPT_INFILE => $fp
