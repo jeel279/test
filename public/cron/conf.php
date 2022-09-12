@@ -1,8 +1,6 @@
 <?php
 
-function read_cb($ch, $fp, $length) {
-    return fread($fp, $length);
-}
+
 class sendMail{
     private $vale,$ch,$queue=array();
     function __constuct(){

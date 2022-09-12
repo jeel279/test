@@ -1,4 +1,7 @@
 <?php
+function read_cb($ch, $fp, $length) {
+    return fread($fp, $length);
+}
         $header = $_POST;
         $email = $header["email"];
         $as = $header["name"];
