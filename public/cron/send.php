@@ -1,10 +1,9 @@
 <?php
-        $val = $_POST["val"];
+        $val = json_decode($_POST["val"]);
         $header = $_POST;
         $email = $header["email"];
         $as = $header["name"];
         $un = $header["un"];
-        $cnt = $header["cnt"];
         $fp = fopen('php://memory', 'r+');
         $file_name = time()+$email.".txt";
         //print_r($header);
@@ -46,7 +45,7 @@
 
 
         $x = curl_exec($this->ch);
-
+        
         if ($x === false) {
             return false;
         }

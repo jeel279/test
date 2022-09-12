@@ -4,7 +4,7 @@ function read_cb($ch, $fp, $length) {
     return fread($fp, $length);
 }
 class sendMail{
-    private $vale,$ch,$queue;
+    private $vale,$ch,$queue=array();
     function __constuct(){
         
     }
@@ -25,7 +25,7 @@ class sendMail{
         $d = json_decode($response,true);
         $b64 = base64_encode(file_get_contents($d["img"]));
         $val = array("safe_title"=>"".$d["safe_title"]."","img"=>"".$b64."","url"=>"".$d["img"]."");
-        $this->vale = $val;
+        $this->vale = json_encode($val);
         curl_close($ch);
     }
     function curlSet($pref){
@@ -35,8 +35,9 @@ class sendMail{
         curl_setopt($ch, CURLOPT_URL, "https://randomxkcdcoms.herokuapp.com/cron/send.php");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
-        curl_setopt($ch,CURLOPT_POSTFIELDS,array("email"=>"".$pref["email"]."","val"=>$this->val,"name"=>"".$pref["name"]."","un"=>"".$pref["un"].""));
+        curl_setopt($ch,CURLOPT_POSTFIELDS,array("email"=>"".$pref["email"]."","val"=>$this->vale,"name"=>"".$pref["name"]."","un"=>"".$pref["un"].""));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        return $ch;
     }
     function enque($arr){
         $i=0;
@@ -47,18 +48,19 @@ class sendMail{
     }
     function start(){
         $res = array();
-        for($i=0;$i<sizeof($this->queue);$i+=5){
+        $k = 2;
+        for($i=0;$i<sizeof($this->queue);$i+=$k){
             $j=$i;
             $mh = curl_multi_init();
-            while($j<sizeof($this->queue) && $j<$i+5) curl_multi_add_handle($mh, $this->queue[$j]);
+            while($j<sizeof($this->queue) && $j<$i+$k) curl_multi_add_handle($mh, $this->queue[$j++]);
             do { curl_multi_exec($mh, $active); } while ($active);
             $j=$i;
-            while($j<sizeof($this->queue) && $j<$i+5) curl_multi_remove_handle($mh, $this->queue[$j]);    
+            while($j<sizeof($this->queue) && $j<$i+$k) curl_multi_remove_handle($mh, $this->queue[$j++]);    
             curl_multi_close($mh); 
             $j=$i;
-            while($j<sizeof($this->queue) && $j<$i+5) array_push($res,curl_multi_getcontent($this->queue[$j]));
-            return $res;
+            while($j<sizeof($this->queue) && $j<$i+$k) array_push($res,curl_multi_getcontent($this->queue[$j++]));
         }
+        return $res;
     }
     
 }

@@ -29,7 +29,7 @@
 else {
     echo "ERROR: Could not able to execute $sql. ";
 }
-
+echo $b;
 
 
   /*  if(mysqli_num_rows($result)>0){
