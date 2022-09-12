@@ -14,6 +14,7 @@
     curl_setopt($chA, CURLOPT_POST, 1);
     curl_setopt($chB, CURLOPT_POST, 1);
     curl_setopt($chC, CURLOPT_POST, 1);
+    curl_setopt($chA, CURLOPT_USERPWD, $username . ":" . $password);
     curl_setopt($chA,CURLOPT_POSTFIELDS,array("email"=>"jeel4402@gmail.com"));
     curl_setopt($chB,CURLOPT_POSTFIELDS,array("email"=>"jeel4403@gmail.com"));
     curl_setopt($chC,CURLOPT_POSTFIELDS,array("email"=>"jeel.vict19@sot.pdpu.ac.in"));

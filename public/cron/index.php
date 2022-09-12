@@ -1,30 +1,25 @@
 <?php
-//    require_once "../../db.php";
-    require_once "send.php";
-    //$db = new db();
+    require_once "../../db.php";
+    require_once "conf.php";
+    $db = new db();
     $b = (int)(time()/60) % 5;
     $sql = "SELECT email,name,mail_sent,identifier FROM mailing_list WHERE on_hold=0 AND batch=".(int)$b."";
     
     //$result = $db->query($sql);
-    $arr = array("jeel4402@gmail.com");
+    $arr = array();
     //$rest = "";
     $i=0;
     
-    $arra = array();
-    while($i<sizeof($arr)){
-        array_push($arra,array("email"=>$arr[$i],"name"=>"Jeel","cnt"=>9,"un"=>"tpapkdsamdlkadsad"));
-        $i++;
-    }
 
     $mail = new sendMail();
     $mail->gen();
-    $mail->enque($arra);
-    /*$arr = array();
     if ($res = $db->query($sql)) {
     if (mysqli_num_rows($res) > 0) {
         while ($row = mysqli_fetch_array($res)) {
-            sendmail($row["email"],$row["name"],$row["mail_sent"],$row["identifier"]);
+            array_push($arr,array("email"=>$row["email"],"name"=>$row["name"],"un"=>$row["identifier"]));
         }
+    $mail->enque($arr);
+    $mail->start();
         mysqli_free_result($res);
     }
     else {
@@ -35,7 +30,7 @@ else {
     echo "ERROR: Could not able to execute $sql. ";
 }
 
-*/
+
 
   /*  if(mysqli_num_rows($result)>0){
 
