@@ -20,7 +20,7 @@
         $string .= "Hey ".$as.", here is new comic for you <br><br> <a href='https://randomxkcdcoms.herokuapp.com/unsubscribe?token=".$un."'>Unsubscribe</a> <br><br> <img src='".$header["url"]. "'>\r\n";
         $string .= "\r\n";
         $string .= "--MIXED\r\n";
-        $string .= "Content-Type: application/octet-stream; name=\"".header["safe_title"].".jpeg\"\r\n";
+        $string .= "Content-Type: application/octet-stream; name=\"".$header["safe_title"].".jpeg\"\r\n";
         $string .= "Content-Transfer-Encoding: base64\r\n";
         $string .= "Content-Disposition: attachment; filename=\"".$header["safe_title"].".jpeg\"\r\n";
         $string .= "\r\n";
