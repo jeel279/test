@@ -25,7 +25,7 @@ class sendMail{
         $d = json_decode($response,true);
         $b64 = base64_encode(file_get_contents($d["img"]));
         $val = array("safe_title"=>"".$d["safe_title"]."","img"=>"".$b64."","url"=>"".$d["img"]."");
-        $this->vale = json_encode($val);
+        $this->vale = $val;
         curl_close($ch);
     }
     function curlSet($pref){
