@@ -25,6 +25,7 @@ async function postData(url = '', data = {}) {
 
 
 document.getElementById("submit").addEventListener("click",function(e){
+  document.getElementById("submit").style.display = 'none';
     postData('https://'+location.host+'/validate/', `email=${email.value}&name=${fname.value}&submit=true` )
   .then((data) => {
     console.log(data);
@@ -39,6 +40,7 @@ document.getElementById("submit").addEventListener("click",function(e){
     }else{
         error.style.display = 'block';
         error.innerText = data['msg'].toString();
+        document.getElementById("submit").style.display = 'block';
     }
   });
 })
