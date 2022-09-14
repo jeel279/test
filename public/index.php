@@ -1,5 +1,6 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#df6303">
 
 <link href="css/style.css" rel="stylesheet">
 <!Mail verification and sender engines are different>
