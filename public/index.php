@@ -2,10 +2,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="css/style.css" rel="stylesheet">
-Mail verification and sender engines are different
+<!Mail verification and sender engines are different>
 </head>
 <body>
+
+
     <div id='sBlock'>
+    <div class="loader">
+  <div class="line"></div>
+  <div class="subline inc"></div>
+  <div class="subline dec"></div>
+</div>
+    <div id='kBlock'>
     <div id="detBlock">
         <span id="title">Random xkcd Comics</span>
 
@@ -18,6 +26,7 @@ Mail verification and sender engines are different
         <button id="verify">Submit</button>
     </div>
     <span id='errBlock'></span>
+</div>
 </div>
     <script src="js/form.js"></script>
 </body>

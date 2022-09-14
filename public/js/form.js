@@ -26,17 +26,24 @@ async function postData(url = '', data = {}) {
 
 document.getElementById("submit").addEventListener("click",function(e){
   document.getElementById("submit").style.display = 'none';
-    postData('https://'+location.host+'/validate/', `email=${email.value}&name=${fname.value}&submit=true` )
+  document.getElementsByClassName("loader")[0].style.display='block';
+    postData('http://'+location.host+'/validate/', `email=${email.value}&name=${fname.value}&submit=true` )
   .then((data) => {
     console.log(data);
     if(data['code']==200){
        error.style.display = 'none';
+       document.getElementsByClassName("loader")[0].style.display='none';
        detblock.style.display = 'none';
        otpblock.style.display = 'block';
     }else if(data['code']==2){
+      document.getElementsByClassName("loader")[0].style.display='none';
       error.style.display = 'block';
       var i = parseInt(data['msg']);
-      var x = setInterval(()=>{error.innerText = `You can request new otp after ${i--} seconds`;if(i==0)clearInterval(x)},1000);
+      var x = setInterval(()=>{error.innerText = `You can request new otp after ${i--} seconds`;if(i==0){
+        document.getElementById("submit").style.display = 'block';error.style.display = 'none';
+        clearInterval(x);
+      }
+      },1000);
     }else{
         error.style.display = 'block';
         error.innerText = data['msg'].toString();
@@ -46,11 +53,15 @@ document.getElementById("submit").addEventListener("click",function(e){
 })
 
 document.getElementById("verify").addEventListener("click",function(e){
-  postData('https://'+location.host+'/validate/', `otp=${otp.value}&verify=true` )
+  document.getElementById("errBlock").style.display = "none";
+  postData('http://'+location.host+'/validate/', `otp=${otp.value}&verify=true` )
 .then((data) => {
   console.log(data);
   if(data['code']==1){
     document.body.innerHTML = data["msg"];
+  }else{
+    document.getElementById("errBlock").style.display = "block";
+    document.getElementById("errBlock").innerText = data["msg"];
   }
 });
 })

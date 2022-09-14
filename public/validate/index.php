@@ -8,7 +8,7 @@
 
     require_once ('../../db.php');
     function errorE($a){
-        $ms = array(1=>"Subscribed",2=>$_SESSION["expiry"] - time(),3=>"Wrong OTP. ". 5 - $_SESSION["TRY"]." attempts left",200=>"OTP Sent.",420=>"Better Luck Next Time",400=>"Invalid Email",401=>"User Already Exists",501=>"Server Error Occurred");
+        $ms = array(0=>"Attempts over",1=>"Subscribed",2=>$_SESSION["expiry"] - time(),3=>"Wrong OTP. ". 5 - $_SESSION["TRY"]." attempts left",200=>"OTP Sent.",420=>"Better Luck Next Time",400=>"Invalid Email",401=>"User Already Exists",501=>"Server Error Occurred");
         $arr = array();
         $arr["code"] = $a;
         $arr["msg"] = $ms[$a];
@@ -17,6 +17,7 @@
 
     if(isset($_POST["verify"])){
         if($_SESSION["TRY"]>=5){
+            echo errorE(0);
             exit();
         }
    
@@ -46,6 +47,7 @@
     $db = new db();
 
 
+
     $userid = $_POST['email'];
     $name = $_POST['name'];
 
@@ -53,9 +55,8 @@
     $sanitized_name = $db->sanitize($name);
 
     $email = $sanitized_userid;
-
-
-    if(isset($_SESSION["expiry"]) && $userid==$_SESSION["EMAIL"]){
+    
+    if(isset($_SESSION["expiry"]) && $email==$_SESSION["EMAIL"]){
         if($_SESSION["expiry"] >= time()){
            echo errorE(2);
            exit();
@@ -106,8 +107,10 @@ if (curl_errno($ch)) {
     exit();
 }
 
-$_SESSION["expiry"] = time() + 5;
+$_SESSION["expiry"] = time() + 120;
 $_SESSION["visited"] = true;
+
+
 echo errorE(200);
 
 }
