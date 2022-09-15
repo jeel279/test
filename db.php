@@ -11,6 +11,8 @@ class db{
 		}
 	}
 	function sanitize($a){
+		$a = htmlspecialchars($a);
+    	$a = strip_tags($a);
 		return mysqli_real_escape_string($this->db, $a);
 	}
 	function query($sql){
