@@ -43,7 +43,7 @@ document.getElementById("submit").addEventListener("click",function(e){
   fname.classList.remove("danger-b");
   document.getElementById("submit").style.display = 'none';
   document.getElementsByClassName("loader")[0].style.display='block';
-    postData('http://'+location.host+'/validate/', `email=${kE}&name=${kN}&submit=true` )
+    postData('https://'+location.host+'/validate/', `email=${kE}&name=${kN}&submit=true` )
   .then((data) => {
     console.log(data);
     if(data['code']==200){
@@ -74,7 +74,7 @@ document.getElementById("back").addEventListener("click",function(e){
 })
 document.getElementById("verify").addEventListener("click",function(e){
   document.getElementById("errBlock").style.display = "none";
-  postData('http://'+location.host+'/validate/', `otp=${otp.value}&verify=true` )
+  postData('https://'+location.host+'/validate/', `otp=${otp.value}&verify=true` )
 .then((data) => {
   console.log(data);
   if(data['code']==1){
