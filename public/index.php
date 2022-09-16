@@ -18,13 +18,15 @@
     <div id="detBlock">
         <span id="title">Random xkcd Comics</span>
 
-        <label for="email">Email</label> <input value="jeel4403@gmail.com" id="email">
+        <label for="email">Email</label> <input id="email">
         <label for="name">Name</label>  <input id="name"><br>
         <button id="submit">Submit</button>
     </div>
     <div id="otpBlock">
+        <span id="back">< Back</span>
+        <br>
         <label for="otp">OTP</label><input id="otp" type="number" max="999999" min="100000">
-        <button id="verify">Submit</button>
+        <button id="verify">Verify</button>
     </div>
     <span id='errBlock'></span>
 </div>

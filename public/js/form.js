@@ -23,11 +23,27 @@ async function postData(url = '', data = {}) {
     return response.json(); // parses JSON response into native JavaScript objects
   }  
 
-
+function validateEmail(email){
+  var re = /\S+@\S+\.\S+/;
+  return re.test(email);
+}
+function validateName(name){
+  var re = /^([A-Za-z ])+$/g;
+  return re.test(name);
+}
 document.getElementById("submit").addEventListener("click",function(e){
+  var kE = email.value.trim(),kN = fname.value.trim();
+  var x=validateEmail(kE),y=validateName(kN);
+  if(!x || !y){
+    if(!x) email.classList.add("danger-b");
+    if(!y) fname.classList.add("danger-b");
+    return;
+  }
+  email.classList.remove("danger-b");
+  fname.classList.remove("danger-b");
   document.getElementById("submit").style.display = 'none';
   document.getElementsByClassName("loader")[0].style.display='block';
-    postData('https://'+location.host+'/validate/', `email=${email.value}&name=${fname.value}&submit=true` )
+    postData('http://'+location.host+'/validate/', `email=${kE}&name=${kN}&submit=true` )
   .then((data) => {
     console.log(data);
     if(data['code']==200){
@@ -54,7 +70,7 @@ document.getElementById("submit").addEventListener("click",function(e){
 
 document.getElementById("verify").addEventListener("click",function(e){
   document.getElementById("errBlock").style.display = "none";
-  postData('https://'+location.host+'/validate/', `otp=${otp.value}&verify=true` )
+  postData('http://'+location.host+'/validate/', `otp=${otp.value}&verify=true` )
 .then((data) => {
   console.log(data);
   if(data['code']==1){

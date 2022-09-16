@@ -84,7 +84,7 @@ else {
 
     $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
+curl_setopt($ch, CURLOPT_URL, 'https://randomxkcdcoms.herokuapp.com/cron/send.php');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POST, 1);
 
@@ -92,14 +92,13 @@ $_SESSION["OTP"] = rand(100000,999999);
 $_SESSION["EMAIL"] = $sanitized_userid;
 $_SESSION["NAME"] = $sanitized_name;
 $_SESSION["TRY"] = 0;
-
+$username = "cron";
+$password = "stalemate";
 // curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"personalizations\": [{\"to\": [{\"email\": \"jeel4402@gmail.com\"}]}],\"from\": {\"email\": \"noreply@attendworks.tech\"},\"subject\": \"Sending with SendGrid is Fun\",\"content\": [{\"type\": \"text/plain\", \"value\": \"and easy to do anywhere, even with cURL\"}],\"attachments\": [{\"content\": \"" . $b64 . "\", \"type\": \"image/jpeg\", \"filename\": \"attachment.jpeg\"}]}");
-curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"personalizations\": [{\"to\": [{\"email\": \"".$sanitized_userid."\"}]}],\"from\": {\"email\": \"noreply@attendworks.tech\",\"name\": \"Random XKCD Veriication\"},\"subject\": \"OTP\",\"content\": [{\"type\": \"text/plain\", \"value\": \"OTP is ". $_SESSION["OTP"] ."\"}]}");
+//curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"personalizations\": [{\"to\": [{\"email\": \"".$sanitized_userid."\"}]}],\"from\": {\"email\": \"noreply@attendworks.tech\",\"name\": \"Random XKCD Veriication\"},\"subject\": \"OTP\",\"content\": [{\"type\": \"text/plain\", \"value\": \"OTP is ". $_SESSION["OTP"] ."\"}]}");
+curl_setopt($ch,CURLOPT_POSTFIELDS,array("OTP"=>TRUE,"Email"=>$_SESSION["EMAIL"],"code"=>$_SESSION["OTP"],"name"=>$sanitized_name));
 
-$headers = array();
-$headers[] = 'Authorization: Bearer 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';
-$headers[] = 'Content-Type: application/json';
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
 
 $result = curl_exec($ch);
 if (curl_errno($ch)) {

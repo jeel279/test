@@ -73,6 +73,14 @@ input{
     height: 3em;
 }
 
+#back{
+  color: #00d1b2;
+  font-weight: 750;
+  display: block;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
 button{
   width: 100%;
   background-color: transparent;
