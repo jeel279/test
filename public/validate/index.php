@@ -28,7 +28,7 @@
                 $t = (int)($t/60) % 5;
                 $name = $_SESSION["NAME"];
                 $email = $_SESSION["EMAIL"];
-                $hash = hash('sha256',$email.$m);
+                $hash = hash('sha256',$email.$tm);
                 $sql = "INSERT INTO mailing_list (name,email,batch,created,identifier) VALUES ('$name','$email',$t,$tm,'$hash')";
             $result = $db->query($sql);
             if($result)
