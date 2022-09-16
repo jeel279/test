@@ -67,14 +67,18 @@ document.getElementById("submit").addEventListener("click",function(e){
     }
   });
 })
-
+document.getElementById("back").addEventListener("click",function(e){
+  otpblock.style.display = "none";
+  document.getElementById("submit").style.display = 'block';
+  detblock.style.display = "block";
+})
 document.getElementById("verify").addEventListener("click",function(e){
   document.getElementById("errBlock").style.display = "none";
   postData('http://'+location.host+'/validate/', `otp=${otp.value}&verify=true` )
 .then((data) => {
   console.log(data);
   if(data['code']==1){
-    document.body.innerHTML = data["msg"];
+    otpblock.innerHTML = data["msg"] + "<br> Random xkcd comics service will be started after 5 minutes.";
   }else{
     document.getElementById("errBlock").style.display = "block";
     document.getElementById("errBlock").innerText = data["msg"];

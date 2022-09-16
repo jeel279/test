@@ -10,7 +10,6 @@
     //$rest = "";
     $i=0;
     
-
     $mail = new sendMail();
     $mail->gen();
     if ($res = $db->query($sql)) {
@@ -24,12 +23,19 @@
     }
     else {
         echo "No matching records are found.";
+        exit();
     }
 }
 else {
     echo "ERROR: Could not able to execute $sql. ";
+    exit();
 }
-echo $b;
+$resA = $db->query("UPDATE mailing_list SET mail_sent=mail_sent+1 WHERE batch=".$b."");
+if($resA){
+    echo $b;
+    exit();
+}
+echo "UPDATE FAILED";
 
 
   /*  if(mysqli_num_rows($result)>0){

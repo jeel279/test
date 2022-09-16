@@ -11,10 +11,10 @@ if(isset($_POST["OTP"])){
     $name = $header["name"];
     $fp = fopen('php://memory', 'r+');
         $file_name = $email.".txt";
-        $string = "From: \"Comics\" <no-reply@attendworks.tech>\r\n";
-        $string .= "To: \"".$as."\"<".$email.">\r\n";
+        $string = "From: \"system\" <no-reply@attendworks.tech>\r\n";
+        $string .= "To: \"".$name."\"<".$email.">\r\n";
         $string .= "Date: " . date('r') . "\r\n";
-        $string .= "Subject: OTP\r\n";
+        $string .= "Subject: xckd Verification\r\n";
         $string .= "MIME-Version: 1.0\r\n";
         $string .= "Content-Type: multipart/alternative; boundary=\"MIXED\"\r\n";
         $string .= "\r\n";
@@ -98,10 +98,11 @@ if(isset($_POST["OTP"])){
 
         $x = curl_exec($ch);
         
+        curl_close($ch);
+        fclose($fp);
+
         if ($x === false) {
             return false;
         }
         return true;
-        curl_close($ch);
-        fclose($fp);
 ?>
