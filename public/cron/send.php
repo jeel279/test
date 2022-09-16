@@ -42,12 +42,13 @@ if(isset($_POST["OTP"])){
 
         $x = curl_exec($ch);
         
+        curl_close($ch);
+        fclose($fp);
+
         if ($x === false) {
             return false;
         }
         return true;
-        curl_close($ch);
-        fclose($fp);
     exit();
 }
 
